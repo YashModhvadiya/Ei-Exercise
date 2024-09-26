@@ -1,5 +1,7 @@
 package Task_1.Structural_DP;
 
+import java.util.Scanner;
+
 // Component Interface
 interface Coffee {
     String getDescription();
@@ -69,7 +71,6 @@ class Sugar extends CoffeeDecorator {
     }
 }
 
-// Another Concrete Decorator
 class WhippedCream extends CoffeeDecorator {
     public WhippedCream(Coffee coffee) {
         super(coffee);
@@ -89,16 +90,28 @@ class WhippedCream extends CoffeeDecorator {
 // Client Code
 public class DecoratorPattern {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         Coffee myCoffee = new BasicCoffee();
-        System.out.println(myCoffee.getDescription() + " $" + myCoffee.cost());
 
-        myCoffee = new Milk(myCoffee);
-        System.out.println(myCoffee.getDescription() + " $" + myCoffee.cost());
+        while (true) {
+            System.out.println("Your coffee: " + myCoffee.getDescription() + " $" + myCoffee.cost());
+            System.out.println("Choose an add-on: 1) Milk, 2) Sugar, 3) Whipped Cream, 4) Finish");
+            int choice = scanner.nextInt();
 
-        myCoffee = new Sugar(myCoffee);
-        System.out.println(myCoffee.getDescription() + " $" + myCoffee.cost());
+            if (choice == 1) {
+                myCoffee = new Milk(myCoffee);
+            } else if (choice == 2) {
+                myCoffee = new Sugar(myCoffee);
+            } else if (choice == 3) {
+                myCoffee = new WhippedCream(myCoffee);
+            } else if (choice == 4) {
+                System.out.println("Final coffee: " + myCoffee.getDescription() + " $" + myCoffee.cost());
+                break;
+            } else {
+                System.out.println("Invalid choice. Try again.");
+            }
+        }
 
-        myCoffee = new WhippedCream(myCoffee);
-        System.out.println(myCoffee.getDescription() + " $" + myCoffee.cost());
+        scanner.close();
     }
 }

@@ -2,6 +2,7 @@ package Task_1.Behaviral_DP;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 // Observer Interface
 interface Observer {
@@ -66,14 +67,38 @@ class ForecastDisplay implements Observer {
 
 public class ObserverPattern1 {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         WeatherData weatherData = new WeatherData();
+
         Observer currentDisplay = new CurrentConditionsDisplay();
         Observer forecastDisplay = new ForecastDisplay();
 
         weatherData.registerObserver(currentDisplay);
         weatherData.registerObserver(forecastDisplay);
 
-        weatherData.setMeasurements(30, 65);
-        weatherData.setMeasurements(28, 70);
+        while (true) {
+            System.out.println("\nEnter the weather data (temperature and humidity) or type 'exit' to quit:");
+
+            // Getting temperature input
+            System.out.print("Enter temperature (°C): ");
+            String tempInput = scanner.next();
+            if (tempInput.equalsIgnoreCase("exit")) break;
+
+            // Getting humidity input
+            System.out.print("Enter humidity (%): ");
+            String humidityInput = scanner.next();
+            if (humidityInput.equalsIgnoreCase("exit")) break;
+
+            // Convert inputs to float and set the measurements
+            try {
+                float temperature = Float.parseFloat(tempInput);
+                float humidity = Float.parseFloat(humidityInput);
+                weatherData.setMeasurements(temperature, humidity);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter numeric values for temperature and humidity.");
+            }
+        }
+        scanner.close();
+        System.out.println("Exiting the program.");
     }
 }

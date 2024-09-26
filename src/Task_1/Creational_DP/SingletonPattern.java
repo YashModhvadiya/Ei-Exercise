@@ -1,5 +1,7 @@
 package Task_1.Creational_DP;
 
+import java.util.Scanner;
+
 // Singleton Class
 class Logger {
     private static Logger instance;
@@ -22,13 +24,27 @@ class Logger {
 
 public class SingletonPattern {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         Logger logger = Logger.getInstance();
-        logger.log("Application started.");
 
+        while (true) {
+            System.out.println("Enter a message to log (type 'exit' to quit): ");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting the logger.");
+                break;
+            }
+
+            logger.log(input);
+        }
+
+        // Demonstrating that anotherLogger is the same instance
         Logger anotherLogger = Logger.getInstance();
-        anotherLogger.log("Application running.");
+        anotherLogger.log("This log is from another logger instance.");
 
-        // Both loggers are the same instance
-        System.out.println(logger == anotherLogger);  // true
+        System.out.println("Are both logger instances the same? " + (logger == anotherLogger));  // true
+
+        scanner.close();
     }
 }

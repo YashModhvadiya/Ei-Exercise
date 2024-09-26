@@ -1,5 +1,7 @@
 package Task_1.Creational_DP;
 
+import java.util.Scanner;
+
 // Product Interface
 interface Vehicle {
     void drive();
@@ -35,10 +37,25 @@ class VehicleFactory {
 
 public class FactoryMethodPattern {
     public static void main(String[] args) {
-        Vehicle vehicle1 = VehicleFactory.getVehicle("Car");
-        vehicle1.drive();
+        Scanner scanner = new Scanner(System.in);
 
-        Vehicle vehicle2 = VehicleFactory.getVehicle("Bike");
-        vehicle2.drive();
+        while (true) {
+            System.out.println("\nEnter the type of vehicle you want ('Car', 'Bike') or type 'exit' to quit:");
+            String vehicleType = scanner.nextLine();
+
+            if (vehicleType.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting the program.");
+                break;
+            }
+
+            Vehicle vehicle = VehicleFactory.getVehicle(vehicleType);
+            if (vehicle != null) {
+                vehicle.drive();
+            } else {
+                System.out.println("Invalid vehicle type. Please enter 'Car' or 'Bike'.");
+            }
+        }
+
+        scanner.close();
     }
 }

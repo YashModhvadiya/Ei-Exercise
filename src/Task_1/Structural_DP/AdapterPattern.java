@@ -1,5 +1,7 @@
 package Task_1.Structural_DP;
 
+import java.util.Scanner;
+
 // Target Interface
 interface MediaPlayer {
     void play(String audioType, String fileName);
@@ -21,7 +23,7 @@ class MediaAdapter implements MediaPlayer {
     AdvancedMediaPlayer advancedMusicPlayer;
 
     public MediaAdapter(String audioType) {
-        if (audioType.equalsIgnoreCase("mp4")) {
+        if (audioType.equalsIgnoreCase("mp4") || audioType.equalsIgnoreCase("vlc")) {
             advancedMusicPlayer = new AdvancedMediaPlayer();
         }
     }
@@ -55,8 +57,24 @@ class AudioPlayer implements MediaPlayer {
 
 public class AdapterPattern {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         AudioPlayer audioPlayer = new AudioPlayer();
-        audioPlayer.play("mp3", "song.mp3");
-        audioPlayer.play("mp4", "movie.mp4");
+
+        while (true) {
+            System.out.println("Enter the audio type (mp3, mp4, vlc) or type 'exit' to quit:");
+            String audioType = scanner.nextLine();
+
+            if (audioType.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting the media player.");
+                break;
+            }
+
+            System.out.println("Enter the file name to play:");
+            String fileName = scanner.nextLine();
+
+            audioPlayer.play(audioType, fileName);
+        }
+
+        scanner.close();
     }
 }
